@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom'
+import ReactDOM, { unstable_createRoot } from 'react-dom'
 import React from 'react'
 
 export function SSRRenderer(jsx: JSX.Element, container?: HTMLElement) {
@@ -9,7 +9,7 @@ export function SSRRenderer(jsx: JSX.Element, container?: HTMLElement) {
             document.body.appendChild(container)
         }
         const oldChildren = [...container.children]
-        ReactDOM.createRoot(container).render(<React.StrictMode children={jsx} />)
+        unstable_createRoot(container).render(<React.StrictMode children={jsx} />)
         oldChildren.forEach((x) => x.remove())
     } else {
         async function render() {
