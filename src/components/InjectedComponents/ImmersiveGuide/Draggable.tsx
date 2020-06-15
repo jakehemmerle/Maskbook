@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import Draggable from 'react-draggable'
+import ReactDraggable from 'react-draggable'
 import { makeStyles, Theme } from '@material-ui/core'
 
 const useStyle = makeStyles((theme: Theme) => ({
@@ -20,13 +20,14 @@ const useStyle = makeStyles((theme: Theme) => ({
         pointerEvents: 'initial',
     },
 }))
-export function DraggableDiv(props: React.HTMLAttributes<HTMLDivElement>) {
+
+export function Draggable(props: React.HTMLAttributes<HTMLDivElement>) {
     const classes = useStyle()
     const ref = useRef<HTMLDivElement>(null)
     const dom = (
-        <Draggable nodeRef={ref} bounds="parent" cancel="p, h1, input, button, address" handle="draggable_handle">
+        <ReactDraggable nodeRef={ref} bounds="parent" cancel="p, h1, input, button, address" handle="draggable_handle">
             <div {...props} ref={ref} className={classes.paper} />
-        </Draggable>
+        </ReactDraggable>
     )
     return <div className={classes.root}>{dom}</div>
 }
