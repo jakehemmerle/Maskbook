@@ -256,6 +256,10 @@ export async function recoverWalletFromPrivateKey(privateKey: string) {
     }
 }
 
+export function walletGetERC20Token(tokenAddress: string) {
+    return getWalletProvider().queryERC20Token(tokenAddress)
+}
+
 export async function walletAddERC20Token(
     walletAddress: string,
     network: EthereumNetwork,

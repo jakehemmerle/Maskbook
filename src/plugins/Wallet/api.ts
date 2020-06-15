@@ -16,6 +16,7 @@ import { createWalletDBAccess } from './database/Wallet.db'
 import { createTransaction } from '../../database/helpers/openDB'
 import { sendTx, sendTxConfigForTxHash } from './tx'
 import { getNetworkSettings } from './UI/Developer/EthereumNetworkSettings'
+import type { ERC20Token } from './token'
 
 function createRedPacketContract(address: string) {
     return (new web3.eth.Contract(HappyRedPacketABI as AbiItem[], address) as unknown) as HappyRedPacket
@@ -431,6 +432,20 @@ export const walletAPI = {
         const erc20Contract = createERC20Contract(tokenAddress)
         const value = await erc20Contract.methods.balanceOf(walletAddress).call()
         return new BigNumber(value)
+    },
+    async queryERC20Token(tokenAddress: string): Promise<ERC20Token> {
+        const erc20Contract = createERC20Contract(tokenAddress)
+        const [name, symbol] = await Promise.all([
+            erc20Contract.methods.name().call(),
+            erc20Contract.methods.symbol().call(),
+            // erc20Contract.methods.decimals().call(),
+        ])
+        return {
+            name,
+            decimals: 0, // parseInt(decimals),
+            symbol,
+            address: tokenAddress,
+        }
     },
     async approveERC20Token(
         senderAddress: string,
