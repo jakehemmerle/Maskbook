@@ -30,8 +30,7 @@ const settings = {
 }
 
 export function getNetworkSettings() {
-    const networkType = ethereumNetworkSettings.value
-
+    const networkType = currentEthereumNetworkSettings.value
     return {
         networkType,
         gitcoinDonationAddress: settings.gitcoinDonationAddress[networkType],
@@ -41,8 +40,12 @@ export function getNetworkSettings() {
     }
 }
 
-export const ethereumNetworkSettings = createNewSettings<EthereumNetwork>('eth network', EthereumNetwork.Rinkeby, {
-    primary: () => 'Ethereum Network',
-    secondary: () =>
-        `You can choose ${EthereumNetwork.Mainnet}, ${EthereumNetwork.Rinkeby} or ${EthereumNetwork.Ropsten}`,
-})
+export const currentEthereumNetworkSettings = createNewSettings<EthereumNetwork>(
+    'eth network',
+    EthereumNetwork.Rinkeby,
+    {
+        primary: () => 'Ethereum Network',
+        secondary: () =>
+            `You can choose ${EthereumNetwork.Mainnet}, ${EthereumNetwork.Rinkeby} or ${EthereumNetwork.Ropsten}`,
+    },
+)
