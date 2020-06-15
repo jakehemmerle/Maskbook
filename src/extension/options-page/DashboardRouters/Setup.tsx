@@ -39,6 +39,7 @@ import { RestoreFromQRCodeCameraBox } from '../DashboardComponents/RestoreFromQR
 import { sleep } from '../../../utils/utils'
 
 export enum SetupStep {
+    ConsentDataCollection = 'consent-data-collection',
     CreatePersona = 'create-persona',
     ConnectNetwork = 'connect-network',
     RestoreDatabase = 'restore-database',
@@ -133,6 +134,31 @@ function SetupForm(props: SetupFormProps) {
                 <div className={classes.section}>{props.actions}</div>
             </div>
         </Fade>
+    )
+}
+//#endregion
+
+//#region consent data collection
+const useConsentDataCollectionStyles = makeStyles((theme) =>
+    createStyles({
+        form: {},
+    }),
+)
+
+export function ConsentDataCollection() {
+    const { t } = useI18N()
+    const setupFormClasses = useSetupFormSetyles()
+    const consentDataCollection = useConsentDataCollectionStyles()
+    return (
+        <SetupForm
+            classes={{
+                form: consentDataCollection.form,
+            }}
+            primary={t('set_up_getting_started')}
+            secondary={t('set_up_getting_started_hint')}
+            content={'TEXT'}
+            actions={'ACTIONS'}
+        />
     )
 }
 //#endregion
@@ -775,6 +801,8 @@ const setupTheme = (theme: Theme): Theme =>
 const CurrentStep = () => {
     const { step } = useParams()
     switch (step as SetupStep) {
+        case SetupStep.ConsentDataCollection:
+            return <ConsentDataCollection />
         case SetupStep.CreatePersona:
             return <CreatePersona />
         case SetupStep.ConnectNetwork:
